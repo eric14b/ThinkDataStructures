@@ -194,11 +194,7 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public T remove(int index) {
-		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException();
-		}
-
-		T temp = array[index];
+		T element = get(index);
 
 		for (int i = index; i < size; ++i) {
 			if (i == size - 1) {
@@ -207,7 +203,7 @@ public class MyArrayList<T> implements List<T> {
 			array[i] = array[i + 1];
 		}
 		size--;
-		return temp;
+		return element;
 	}
 
 	@Override
@@ -226,11 +222,9 @@ public class MyArrayList<T> implements List<T> {
 
 	@Override
 	public T set(int index, T element) {
-		if (index < 0 || index >= size) {
-			throw new IndexOutOfBoundsException();
-		}
 
-		T temp = array[index];
+		// Get checks index exception for us.
+		T temp = get(index);
 		array[index] = element;
 		return temp;
 	}
