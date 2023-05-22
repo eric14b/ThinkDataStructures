@@ -30,11 +30,13 @@ public class MyLinkedList<E> implements List<E> {
 			this.data = data;
 			this.next = null;
 		}
+
 		@SuppressWarnings("unused")
 		public Node(E data, Node next) {
 			this.data = data;
 			this.next = next;
 		}
+
 		public String toString() {
 			return "Node(" + data.toString() + ")";
 		}
@@ -60,6 +62,9 @@ public class MyLinkedList<E> implements List<E> {
 		mll.add(1);
 		mll.add(2);
 		mll.add(3);
+
+		mll.remove(3);
+
 		System.out.println(Arrays.toString(mll.toArray()) + " size = " + mll.size());
 
 		mll.remove(new Integer(2));
@@ -82,7 +87,14 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public void add(int index, E element) {
-		//TODO: FILL THIS IN!
+		// getNode checks for index out of bounds.
+		if (index == 0) {
+			head = new Node(element, head);
+		} else {
+			Node node = getNode(index - 1);
+			node.next = new Node(element, node.next);
+		}
+		size++;
 	}
 
 	@Override
@@ -143,7 +155,13 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public int indexOf(Object target) {
-		//TODO: FILL THIS IN!
+		Node node = head;
+		for (int i=0; i<size; ++i) {
+			if (equals(target, node.data)) {
+				return i;
+			}
+			node = node.next;
+		}
 		return -1;
 	}
 
@@ -208,8 +226,17 @@ public class MyLinkedList<E> implements List<E> {
 
 	@Override
 	public E remove(int index) {
-		//TODO: FILL THIS IN!
-		return null;
+		E element = get(index);
+
+		if (index == 0) { //Remove head node and replace by next node in line if index=0
+			head = head.next;
+		} else {
+			Node node = getNode(index - 1);
+			node.next = node.next.next;
+		}
+		size--;
+		return element;
+
 	}
 
 	@Override
